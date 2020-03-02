@@ -921,6 +921,14 @@ struct vkd3d_pipeline_bindings
     uint32_t push_descriptor_active_mask;
 };
 
+struct d3d12_deferred_descriptor_set_update
+{
+    const struct d3d12_desc *base_descriptor;
+    unsigned int index;
+    const struct d3d12_root_signature *root_signature;
+    VkDescriptorSet descriptor_set;
+};
+
 /* ID3D12CommandList */
 struct d3d12_command_list
 {
@@ -963,6 +971,10 @@ struct d3d12_command_list
 
     VkBuffer so_counter_buffers[D3D12_SO_BUFFER_SLOT_COUNT];
     VkDeviceSize so_counter_buffer_offsets[D3D12_SO_BUFFER_SLOT_COUNT];
+
+    struct d3d12_deferred_descriptor_set_update *descriptor_updates;
+    size_t descriptor_updates_size;
+    size_t descriptor_updates_count;
 
     struct vkd3d_private_store private_store;
 };
